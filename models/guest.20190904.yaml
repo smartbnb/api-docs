@@ -1,0 +1,25 @@
+title: guest.20190904.yaml
+type: object
+description: |-
+  A guest who is staying or requesting to stay in a property.
+
+  **Latest version: 20190904**
+properties:
+  uuid:
+    type: string
+    format: uuid
+  first_name:
+    type: string
+  last_name:
+    type: string
+  email:
+    type: string
+    format: email
+  phone:
+    type: string
+required:
+  - uuid
+  - first_name
+  - last_name
+  - email
+  - phone

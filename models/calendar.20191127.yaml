@@ -1,0 +1,30 @@
+title: calendar
+type: object
+description: |-
+  Describes a Calendar comprising of a range of Days for a given listing.
+
+  **Latest version: 20191127**
+properties:
+  listing_id:
+    type: string
+  provider:
+    type: string
+    enum:
+      - AIRBNB
+      - HOMEAWAY
+  start_date:
+    type: string
+    format: date
+    example: '2020-01-15'
+  end_date:
+    type: string
+    format: date
+    example: '2020-01-31'
+  days:
+    $ref: ./day.20191127.yaml
+required:
+  - listing_id
+  - provider
+  - start_date
+  - end_date
+  - days

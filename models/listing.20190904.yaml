@@ -1,0 +1,67 @@
+title: Listing
+type: object
+properties:
+  id:
+    type: string
+    description: The Listing ID from the provider.
+  provider:
+    type: string
+    enum:
+      - AIRBNB
+      - HOMEAWAY
+    description: Where this listing is listed.
+  name:
+    type: string
+  picture:
+    type: string
+    format: uri
+  address:
+    type: string
+  available:
+    type: boolean
+  checkin:
+    type: string
+    format: time
+  checkout:
+    type: string
+    format: time
+  capacity:
+    type: object
+    required:
+      - max
+      - bedrooms
+      - beds
+      - bathrooms
+    properties:
+      max:
+        type: integer
+        minimum: 0
+      bedrooms:
+        type: integer
+        minimum: 0
+      beds:
+        type: integer
+        minimum: 0
+      bathrooms:
+        type: integer
+        minimum: 0
+  rating:
+    type: number
+    format: float
+    minimum: 0
+    multipleOf: 0.1
+required:
+  - id
+  - provider
+  - name
+  - picture
+  - address
+  - available
+  - checkin
+  - checkout
+  - capacity
+  - rating
+description: |-
+  Representation of a listing on a provider.
+
+  **Latest version: 20190904**

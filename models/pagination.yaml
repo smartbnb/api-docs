@@ -1,0 +1,24 @@
+title: Pagination
+type: object
+properties:
+  total:
+    type: integer
+    minimum: 1
+  count:
+    type: integer
+    minimum: 1
+  per_page:
+    type: integer
+    minimum: 1
+  current_page:
+    type: integer
+    minimum: 1
+  total_pages:
+    type: integer
+    minimum: 1
+required:
+  - total
+  - count
+  - per_page
+  - current_page
+  - total_pages

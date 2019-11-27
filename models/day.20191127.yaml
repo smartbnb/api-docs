@@ -1,0 +1,42 @@
+title: day.20191127.yaml
+type: object
+properties:
+  date:
+    type: string
+    format: date
+    example: '2019-11-27'
+  day:
+    type: string
+    enum:
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
+      - SUNDAY
+  status:
+    type: object
+    required:
+      - reason
+      - available
+    properties:
+      reason:
+        type: string
+        enum:
+          - AVAILABLE
+          - BLOCKED
+          - RESERVED
+      available:
+        type: boolean
+  price:
+    $ref: ./money.yaml
+required:
+  - date
+  - day
+  - status
+  - price
+description: |-
+  Representation of a Day in a Listing’s calendar, including its pricing and availability.
+
+  **Latest version: 20191127**

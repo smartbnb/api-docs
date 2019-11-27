@@ -1,0 +1,81 @@
+title: reservation.20190904.yaml
+type: object
+description: |-
+  Details of a reservation on a property.
+
+  **Latest version: 20190904**
+properties:
+  uuid:
+    type: string
+    format: uuid
+  guest_uuid:
+    type: string
+    format: uuid
+  provider:
+    type: string
+    enum:
+      - AIRBNB
+      - HOMEAWAY
+  listing_id:
+    type: string
+  reservation_code:
+    type: string
+  status:
+    type: string
+  actionable:
+    type: boolean
+  booked_at:
+    type: string
+    format: date-time
+  instant_booked:
+    type: boolean
+  nights:
+    type: integer
+    minimum: 1
+  occupancy:
+    type: object
+    required:
+      - adults
+      - children
+      - infants
+      - pets
+    properties:
+      adults:
+        type: integer
+        minimum: 0
+      children:
+        type: integer
+        minimum: 0
+      infants:
+        type: integer
+        minimum: 0
+      pets:
+        type: integer
+        minimum: 0
+  subtotal:
+    $ref: ./money.yaml
+  checkin:
+    type: string
+    format: date
+    description: 'Check-in date, in Y-m-d format.'
+  checkout:
+    type: string
+    description: 'Check-out date, in Y-m-d format.'
+    format: date
+  _includes:
+    type: object
+required:
+  - uuid
+  - guest_uuid
+  - provider
+  - listing_id
+  - reservation_code
+  - status
+  - actionable
+  - booked_at
+  - instant_booked
+  - nights
+  - occupancy
+  - subtotal
+  - checkin
+  - checkout
