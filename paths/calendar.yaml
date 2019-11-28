@@ -1,8 +1,16 @@
 openapi: 3.0.0
+tags:
+  - name: calendar
+    description: Belongs to the Calendar API
+  - name: properties
+    description: Belongs to the Properties API
 info:
   title: Calendar API
   version: ''
   description: 'Endpoints for viewing and manipulating data in listing calendars, including Reservations, Availability, and Pricing.'
+  contact:
+    url: 'https://smartbnb.io'
+    email: hello@smartbnb.io
 servers:
   - url: 'https://api.smartbnb.io/calendar'
     description: Calendar endpoints
@@ -10,7 +18,8 @@ paths:
   /listings:
     get:
       summary: Get Listings
-      tags: []
+      tags:
+        - properties
       responses:
         '200':
           description: OK
@@ -76,11 +85,11 @@ paths:
                       total_pages: 51
       operationId: get-listings
       description: "Get all listings that are on channels connected to your smartbnb account.\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/listings'\n```"
-      requestBody: {}
   /reservations:
     get:
       summary: Get Reservations
-      tags: []
+      tags:
+        - calendar
       responses:
         '200':
           description: OK
@@ -92,7 +101,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: ../../models/reservation.20190904.v1.yaml
+                      $ref: ../../models/reservation.20190904.yaml
                   _pagination:
                     $ref: ../../models/pagination.yaml
                 required:
@@ -144,9 +153,64 @@ paths:
         required: true
     get:
       summary: Get Calendar
-      tags: []
-      responses: {}
-      operationId: 'get-{listingId}'
+      tags:
+        - calendar
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: ../../models/calendar.20191127.yaml
+              examples:
+                Example:
+                  value:
+                    data:
+                      listing_id: 121.9876543.1234567
+                      provider: HOMEAWAY
+                      start_date: '2020-01-11'
+                      end_date: '2020-01-13'
+                      days:
+                        - date: '2020-01-11'
+                          day: SATURDAY
+                          status:
+                            name: AVAILABLE
+                            available: true
+                          price:
+                            amount: 130000
+                            currency: EUR
+                        - date: '2020-01-12'
+                          day: SUNDAY
+                          status:
+                            name: BLOCKED
+                            available: false
+                          price:
+                            amount: 130000
+                            currency: EUR
+                        - date: '2020-01-13'
+                          day: MONDAY
+                          status:
+                            name: RESERVED
+                            available: false
+                          price:
+                            amount: 120050
+                            currency: EUR
+                      _meta:
+                        rel: calendar
+                        version: '20190611'
+      operationId: get-calendar
       description: "Given a listing ID and (optionally) dates, returns the Pricing and Availability for the listing in calendar format.\n\n### URL parameters\n\n- `start_date`: Optional, start date for the calendar range in `Y-m-d` format, defaults to today.\n- `end_date`: Optional, end date for the calendar range in `Y-m-d` format, defaults to `start_date` + 14 days.\n\n\n### Allowed Includes\n\nNone.\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/123456&start_date=2019-08-31&end_date=2019-09-30'\n```\n"
 components:
   schemas: {}
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          authorizationUrl: 'https://auth.smartbnb.io/oauth/dialog'
+          tokenUrl: 'https://auth.smartbnb.io/oauth/token'
+          scopes:
+            'read:calendar': read calendar data
