@@ -1,4 +1,4 @@
-title: calendar
+title: Calendar
 type: object
 description: |-
   Describes a Calendar comprising of a range of Days for a given listing.

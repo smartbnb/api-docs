@@ -1,4 +1,4 @@
-title: reservation.20190904.yaml
+title: Reservation
 type: object
 description: |-
   Details of a reservation on a property.

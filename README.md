@@ -1,6 +1,6 @@
-# Welcome to the Smartbnb Public API documentation.
+# Smartbnb Public API
 
-This early access release of the Smartbnb Public API allows you to read calendar data of your active listings in a simple, programmatic way, using conventional HTTP requests.
+Welcome to the Smartbnb Public API documentation! This early access release of the Smartbnb Public API allows you to read calendar data of your active listings in a simple, programmatic way, using conventional HTTP requests.
 
 The API documentation will start with a general overview about the design and technology that has been implemented, followed by reference information about specific endpoints.
 

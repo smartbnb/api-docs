@@ -1,4 +1,4 @@
-title: guest.20190904.yaml
+title: Guest
 type: object
 description: |-
   A guest who is staying or requesting to stay in a property.
