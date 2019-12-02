@@ -169,7 +169,7 @@ paths:
         - OAuth2: []
   /properties:
     get:
-      summary: Your GET endpoint
+      summary: Get properties
       tags: []
       responses:
         '200':
@@ -231,7 +231,7 @@ paths:
         schema:
           type: string
     get:
-      summary: Your GET endpoint
+      summary: Get property by ID
       tags: []
       responses:
         '200':
