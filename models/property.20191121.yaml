@@ -43,10 +43,11 @@ properties:
   timezone:
     type: string
     example: '-0930'
-    pattern: "(+|-)\\d{4}"
+    minLength: 5
+    maxLength: 5
   listings:
     type: integer
-    example: '3'
+    example: 3
     minimum: 0
     description: The amount of listings associated with this property
   features:
@@ -76,5 +77,5 @@ required:
   - address
   - timezone
   - listings
-  - listed
   - features
+  - listed

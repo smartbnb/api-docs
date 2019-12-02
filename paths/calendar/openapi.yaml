@@ -163,7 +163,7 @@ paths:
         - name: listingId
           in: path
           required: true
-          description: The id of the pet to retrieve
+          description: The ID of the listing to retrieve the calendar for
           schema:
             type: string
       responses:

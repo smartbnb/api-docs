@@ -109,10 +109,12 @@ paths:
         - OAuth2: []
   '/listings/{listingId}':
     parameters:
-      - type: string
-        name: listingId
+      - name: listingId
         in: path
         required: true
+        description: The ID of the listing to retrieve the calendar for
+        schema:
+          type: string
     get:
       summary: Get Listing by ID
       tags:
@@ -163,7 +165,6 @@ paths:
                         version: '20190902'
       operationId: get-listing-by-id
       description: "Get a listing from one of your channels by its listing ID\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/listings/{listingId}'\n```"
-      requestBody: {}
       security:
         - OAuth2: []
   /properties:
@@ -223,10 +224,12 @@ paths:
         - OAuth2: []
   '/properties/{propertyId}':
     parameters:
-      - type: string
-        name: propertyId
+      - name: propertyId
         in: path
         required: true
+        description: The ID of the property to retrieve
+        schema:
+          type: string
     get:
       summary: Your GET endpoint
       tags: []
