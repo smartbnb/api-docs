@@ -146,15 +146,17 @@ paths:
       operationId: get-reservations
       description: "Given listings and (optionally) check-in dates, returns a filtered list of reservations.\n\n### URL parameters\n\n- `listings[]`: Array of listing IDs to get reservations for - use as: `?listings[]=123&listings[]=456`. These are the IDs that are available in HomeAway / Airbnb, and you can also get them from the `GET /listings` endpoint.\n- `start_date`: Optional, find reservations with check-in dates after this day. Y-m-d format, defaults to today.\n- `end_date`: Optional, find reservations with check-in dates before this day. Y-m-d format, defaults to `start_date` + 14 days.\n\n\n### Allowed Includes\n\n- `guest`\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/reservations?listings[]=123456&listings[]=654321&start_date=2019-08-31&end_date=2019-09-30'\n```"
   '/{listingId}':
-    parameters:
-      - type: string
-        name: listingId
-        in: path
-        required: true
     get:
       summary: Get Calendar
       tags:
         - calendar
+      parameters:
+        - name: listingId
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -210,7 +212,6 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-          authorizationUrl: 'https://auth.smartbnb.io/oauth/dialog'
           tokenUrl: 'https://auth.smartbnb.io/oauth/token'
           scopes:
             'read:calendar': read calendar data
