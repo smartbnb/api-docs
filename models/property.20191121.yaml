@@ -1,0 +1,80 @@
+title: Property
+type: object
+description: |-
+  Representation of a property.
+
+  **Latest version: 20191121**
+x-examples:
+  Example:
+    id: '123456'
+    name: Room with a view of a tree
+    picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+    address:
+      apartment: 37a
+      street: Senefelderplatz
+      city: Berlin
+      state: ''
+      country: DE
+      postcode: '10405'
+      coordinates:
+        latitude: 50.8514786
+        longitude: 4.364562
+      display: '37a Senefelderplatz, 10405 Berlin, DE'
+    timezone: '+0200'
+    listings: 2
+    listed: true
+    features:
+      sync: false
+      heartbeats: true
+      stealth: false
+properties:
+  id:
+    type: string
+    minLength: 1
+    description: The ID of the property
+  name:
+    type: string
+  picture:
+    type: string
+    description: The URL for the picture of the property
+    format: uri
+  address:
+    $ref: ./address.yaml
+  timezone:
+    type: string
+    example: '-0930'
+    pattern: "(+|-)\\d{4}"
+  listings:
+    type: integer
+    example: '3'
+    minimum: 0
+    description: The amount of listings associated with this property
+  features:
+    type: object
+    description: The features that are enabled / disabled for this property
+    required:
+      - sync
+      - heartbeats
+      - stealth
+    properties:
+      sync:
+        type: boolean
+        description: Whether Sync is enabled or not
+      heartbeats:
+        type: boolean
+        description: Whether Heartbeats are enabled or not
+      stealth:
+        type: boolean
+        description: Whether Stealth is enabled or not
+  listed:
+    type: boolean
+    description: Whether the property is listed on provider websites
+required:
+  - id
+  - name
+  - picture
+  - address
+  - timezone
+  - listings
+  - listed
+  - features

@@ -1,0 +1,19 @@
+title: Coordinates
+type: object
+description: Representation of a coordinate.
+x-examples:
+  Example:
+    latitude: 50.8514786
+    longitude: 4.364562
+properties:
+  longitude:
+    type: number
+    description: The longitude
+    format: float
+  latitude:
+    type: number
+    description: The latitude
+    format: float
+required:
+  - longitude
+  - latitude

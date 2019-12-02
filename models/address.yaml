@@ -1,0 +1,42 @@
+title: Address
+type: object
+description: Representation of an address.
+x-examples:
+  Example:
+    apartment: Bag End
+    street: The Hill
+    city: Hobbiton
+    state: The Shire
+    country: Middle Earth
+    postcode: B1L B0
+    coordinates:
+      latitude: 50.8514786
+      longitude: 4.364562
+    display: 'Bag End, The Hill, Hobbiton, The Shire, Middle Earth, B1L B0'
+properties:
+  display:
+    type: string
+    description: "The display string you'd use to display the full address"
+  coordinates:
+    $ref: ./coordinates.yaml
+  postcode:
+    type: string
+  country:
+    type: string
+  state:
+    type: string
+  city:
+    type: string
+  street:
+    type: string
+  apartment:
+    type: string
+required:
+  - display
+  - coordinates
+  - postcode
+  - country
+  - state
+  - city
+  - street
+  - apartment

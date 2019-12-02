@@ -32,18 +32,17 @@ paths:
                     type: array
                     items:
                       $ref: ../../models/listing.20190904.yaml
-                  pagination:
+                  _pagination:
                     $ref: ../../models/pagination.yaml
                 required:
                   - data
-                  - pagination
+                  - _pagination
               examples:
                 Example:
                   value:
                     data:
                       - id: '12345'
                         provider: AIRBNB
-                        provider_id: '543112'
                         name: Relaxing Villa near the sea
                         picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
                         address: 'Senefelderplatz, 10405 Berlin'
@@ -59,9 +58,8 @@ paths:
                         _meta:
                           rel: listing
                           version: '20190902'
-                      - id: '54321'
+                      - id: 123.53341.5415
                         provider: HOMEAWAY
-                        provider_id: 123.53341.5415
                         name: Cozy apartment in the mountains
                         picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
                         address: 'Senefelderplatz, 10405 Berlin'
@@ -85,6 +83,8 @@ paths:
                       total_pages: 51
       operationId: get-listings
       description: "Get all listings that are on channels connected to your smartbnb account.\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/listings'\n```"
+      security:
+        - OAuth2: []
   /reservations:
     get:
       summary: Get Reservations
@@ -145,6 +145,15 @@ paths:
                       total_pages: 1
       operationId: get-reservations
       description: "Given listings and (optionally) check-in dates, returns a filtered list of reservations.\n\n### URL parameters\n\n- `listings[]`: Array of listing IDs to get reservations for - use as: `?listings[]=123&listings[]=456`. These are the IDs that are available in HomeAway / Airbnb, and you can also get them from the `GET /listings` endpoint.\n- `start_date`: Optional, find reservations with check-in dates after this day. Y-m-d format, defaults to today.\n- `end_date`: Optional, find reservations with check-in dates before this day. Y-m-d format, defaults to `start_date` + 14 days.\n\n\n### Allowed Includes\n\n- `guest`\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/reservations?listings[]=123456&listings[]=654321&start_date=2019-08-31&end_date=2019-09-30'\n```"
+      security:
+        - OAuth2: []
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - guest
+          in: query
+          name: include
   '/{listingId}':
     get:
       summary: Get Calendar
@@ -205,6 +214,8 @@ paths:
                         version: '20190611'
       operationId: get-calendar
       description: "Given a listing ID and (optionally) dates, returns the Pricing and Availability for the listing in calendar format.\n\n### URL parameters\n\n- `start_date`: Optional, start date for the calendar range in `Y-m-d` format, defaults to today.\n- `end_date`: Optional, end date for the calendar range in `Y-m-d` format, defaults to `start_date` + 14 days.\n\n\n### Allowed Includes\n\nNone.\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/123456&start_date=2019-08-31&end_date=2019-09-30'\n```\n"
+      security:
+        - OAuth2: []
 components:
   schemas: {}
   securitySchemes:

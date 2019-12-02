@@ -1,0 +1,293 @@
+openapi: 3.0.0
+tags:
+  - name: calendar
+    description: Belongs to the Calendar API
+  - name: properties
+    description: Belongs to the Properties API
+info:
+  title: Properties API
+  version: ''
+  description: Endpoints for viewing Properties and their associated Listings.
+  contact:
+    url: 'https://smartbnb.io'
+    email: hello@smartbnb.io
+servers:
+  - url: 'https://api.smartbnb.io'
+    description: Property & listing endpoints
+paths:
+  /listings:
+    get:
+      summary: Get Listings
+      tags:
+        - properties
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: ../../models/listing.20191126.yaml
+                  _pagination:
+                    $ref: ../../models/pagination.yaml
+                required:
+                  - data
+                  - _pagination
+              examples:
+                Example:
+                  value:
+                    data:
+                      - id: '12345'
+                        provider: AIRBNB
+                        name: Relaxing Villa near the sea
+                        picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+                        address:
+                          apartment: 37a
+                          street: Senefelderplatz
+                          city: Berlin
+                          state: ''
+                          country: DE
+                          postcode: '10405'
+                          coordinates:
+                            latitude: 50.8514786
+                            longitude: 4.364562
+                          display: '37a Senefelderplatz, 10405 Berlin, DE'
+                        timezone: '+0200'
+                        available: true
+                        checkin: '16:00 +0200'
+                        checkout: '10:00 +0200'
+                        capacity:
+                          max: 8
+                          bedrooms: 4
+                          beds: 4
+                          bathrooms: 3
+                        rating: 4.3
+                        _meta:
+                          rel: listing
+                          version: '20190902'
+                      - id: 123.53341.5415
+                        provider: HOMEAWAY
+                        name: Cozy apartment in the mountains
+                        picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+                        address:
+                          apartment: 37a
+                          street: Senefelderplatz
+                          city: Berlin
+                          state: ''
+                          country: DE
+                          postcode: '10405'
+                          coordinates:
+                            latitude: 50.8514786
+                            longitude: 4.364562
+                          display: '37a Senefelderplatz, 10405 Berlin, DE'
+                        timezone: '+0200'
+                        available: true
+                        checkin: '14:00 +0200'
+                        checkout: '09:00 +0200'
+                        capacity:
+                          max: 4
+                          bedrooms: 1
+                          beds: 2
+                          bathrooms: 1
+                        rating: 3.4
+                        _meta:
+                          rel: listing
+                          version: '20190902'
+                    _pagination:
+                      total: 102
+                      count: 2
+                      per_page: 2
+                      current_page: 2
+                      total_pages: 51
+      operationId: get-listings
+      description: "Get all listings that are on channels connected to your smartbnb account.\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/listings'\n```"
+      security:
+        - OAuth2: []
+  '/listings/{listingId}':
+    parameters:
+      - type: string
+        name: listingId
+        in: path
+        required: true
+    get:
+      summary: Get Listing by ID
+      tags:
+        - properties
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: ../../models/listing.20191126.yaml
+                required:
+                  - data
+              examples:
+                Example:
+                  value:
+                    data:
+                      id: '12345'
+                      provider: AIRBNB
+                      name: Relaxing Villa near the sea
+                      picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+                      address:
+                        apartment: 37a
+                        street: Senefelderplatz
+                        city: Berlin
+                        state: ''
+                        country: DE
+                        postcode: '10405'
+                        coordinates:
+                          latitude: 50.8514786
+                          longitude: 4.364562
+                        display: '37a Senefelderplatz, 10405 Berlin, DE'
+                      timezone: '+0200'
+                      available: true
+                      checkin: '16:00 +0200'
+                      checkout: '10:00 +0200'
+                      capacity:
+                        max: 8
+                        bedrooms: 4
+                        beds: 4
+                        bathrooms: 3
+                      rating: 4.3
+                      _meta:
+                        rel: listing
+                        version: '20190902'
+      operationId: get-listing-by-id
+      description: "Get a listing from one of your channels by its listing ID\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/listings/{listingId}'\n```"
+      requestBody: {}
+      security:
+        - OAuth2: []
+  /properties:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: ../../models/property.20191121.yaml
+                  _pagination:
+                    $ref: ../../models/pagination.yaml
+                required:
+                  - data
+              examples:
+                Example:
+                  value:
+                    data:
+                      - id: '123456'
+                        name: Room with a view of a tree
+                        picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+                        address:
+                          apartment: 37a
+                          street: Senefelderplatz
+                          city: Berlin
+                          state: ''
+                          country: DE
+                          postcode: '10405'
+                          coordinates:
+                            latitude: 50.8514786
+                            longitude: 4.364562
+                          display: '37a Senefelderplatz, 10405 Berlin, DE'
+                        timezone: '+0200'
+                        listings: 2
+                        listed: true
+                        features:
+                          sync: false
+                          heartbeats: true
+                          stealth: false
+                    _pagination:
+                      total: 102
+                      count: 2
+                      per_page: 2
+                      current_page: 2
+                      total_pages: 51
+      operationId: get-properties
+      description: "Get all the properties from your account\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/properties'\n```"
+      security:
+        - OAuth2: []
+  '/properties/{propertyId}':
+    parameters:
+      - type: string
+        name: propertyId
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: ../../models/property.20191121.yaml
+                required:
+                  - data
+              examples:
+                Example:
+                  value:
+                    data:
+                      id: '123456'
+                      name: Room with a view of a tree
+                      picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+                      address:
+                        apartment: 37a
+                        street: Senefelderplatz
+                        city: Berlin
+                        state: ''
+                        country: DE
+                        postcode: '10405'
+                        coordinates:
+                          latitude: 50.8514786
+                          longitude: 4.364562
+                        display: '37a Senefelderplatz, 10405 Berlin, DE'
+                      timezone: '+0200'
+                      listings: 2
+                      listed: true
+                      features:
+                        sync: false
+                        heartbeats: true
+                        stealth: false
+                      _meta:
+                        rel: property
+                        version: '20191121'
+      operationId: get-property-by-id
+      description: "Get a property by its unique ID\n\n### Allowed Includes\n\n- `listings`: Include the individual listings associated with that property\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/properties/{propertyId}'\n```"
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - listings
+          in: query
+          name: include
+      security:
+        - OAuth2: []
+components:
+  schemas: {}
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://auth.smartbnb.io/oauth/token'
+          scopes:
+            'read:calendar': read calendar data

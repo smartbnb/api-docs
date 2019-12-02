@@ -1,5 +1,36 @@
 title: Listing
 type: object
+description: |-
+  Representation of a listing on a provider.
+
+  **Latest version: 20191126**
+x-examples:
+  Example:
+    id: 121.1005001.1234567
+    provider: HOMEAWAY
+    name: Relaxing villa by the sea
+    picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+    address:
+      apartment: 37a
+      street: Senefelderplatz
+      city: Berlin
+      state: ''
+      country: DE
+      postcode: '10405'
+      coordinates:
+        latitude: 50.8514786
+        longitude: 4.364562
+      display: '37a Senefelderplatz, 10405 Berlin, DE'
+    timezone: '+0200'
+    available: true
+    checkin: '15:30 +0200'
+    checkout: '10:30 +0200'
+    capacity:
+      max: 4
+      bedrooms: 1
+      beds: 0
+      bathrooms: 1
+    rating: 5
 properties:
   id:
     type: string
@@ -16,7 +47,12 @@ properties:
     type: string
     format: uri
   address:
+    $ref: ./address.yaml
+  timezone:
     type: string
+    description: "Numeric offset of the listing's timezone from UTC"
+    example: '-0930'
+    pattern: "(+|-)\\d{4}"
   available:
     type: boolean
   checkin:
@@ -61,26 +97,4 @@ required:
   - checkout
   - capacity
   - rating
-description: |-
-  Representation of a listing on a provider.
-
-  **Latest version: 20190904**
-x-examples:
-  Example:
-    id: '12345'
-    provider: AIRBNB
-    name: Relaxing Villa near the sea
-    picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
-    address: 'Senefelderplatz, 10405 Berlin'
-    available: true
-    checkin: '16:00 +0200'
-    checkout: '10:00 +0200'
-    capacity:
-      max: 8
-      bedrooms: 4
-      beds: 4
-      bathrooms: 3
-    rating: 4.3
-    _meta:
-      rel: listing
-      version: '20190902'
+  - timezone
