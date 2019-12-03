@@ -2,8 +2,6 @@ openapi: 3.0.0
 tags:
   - name: calendar
     description: Belongs to the Calendar API
-  - name: properties
-    description: Belongs to the Properties API
 info:
   title: Calendar API
   version: ''
@@ -15,76 +13,6 @@ servers:
   - url: 'https://api.smartbnb.io/calendar'
     description: Calendar endpoints
 paths:
-  /listings:
-    get:
-      summary: Get Listings
-      tags:
-        - properties
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: ../../models/listing.20190904.yaml
-                  _pagination:
-                    $ref: ../../models/pagination.yaml
-                required:
-                  - data
-                  - _pagination
-              examples:
-                Example:
-                  value:
-                    data:
-                      - id: '12345'
-                        provider: AIRBNB
-                        name: Relaxing Villa near the sea
-                        picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
-                        address: 'Senefelderplatz, 10405 Berlin'
-                        available: true
-                        checkin: '16:00 +0200'
-                        checkout: '10:00 +0200'
-                        capacity:
-                          max: 8
-                          bedrooms: 4
-                          beds: 4
-                          bathrooms: 3
-                        rating: 4.3
-                        _meta:
-                          rel: listing
-                          version: '20190902'
-                      - id: 123.53341.5415
-                        provider: HOMEAWAY
-                        name: Cozy apartment in the mountains
-                        picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
-                        address: 'Senefelderplatz, 10405 Berlin'
-                        available: true
-                        checkin: '14:00 +0200'
-                        checkout: '09:00 +0200'
-                        capacity:
-                          max: 4
-                          bedrooms: 1
-                          beds: 2
-                          bathrooms: 1
-                        rating: 3.4
-                        _meta:
-                          rel: listing
-                          version: '20190902'
-                    _pagination:
-                      total: 102
-                      count: 2
-                      per_page: 2
-                      current_page: 2
-                      total_pages: 51
-      operationId: get-listings
-      description: "Get all listings that are on channels connected to your smartbnb account.\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/listings'\n```"
-      security:
-        - OAuth2: []
   /reservations:
     get:
       summary: Get Reservations
@@ -145,8 +73,6 @@ paths:
                       total_pages: 1
       operationId: get-reservations
       description: "Given listings and (optionally) check-in dates, returns a filtered list of reservations.\n\n### URL parameters\n\n- `listings[]`: Array of listing IDs to get reservations for - use as: `?listings[]=123&listings[]=456`. These are the IDs that are available in HomeAway / Airbnb, and you can also get them from the `GET /listings` endpoint.\n- `start_date`: Optional, find reservations with check-in dates after this day. Y-m-d format, defaults to today.\n- `end_date`: Optional, find reservations with check-in dates before this day. Y-m-d format, defaults to `start_date` + 14 days.\n\n\n### Allowed Includes\n\n- `guest`\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/reservations?listings[]=123456&listings[]=654321&start_date=2019-08-31&end_date=2019-09-30'\n```"
-      security:
-        - OAuth2: []
       parameters:
         - schema:
             type: string
@@ -154,6 +80,8 @@ paths:
               - guest
           in: query
           name: include
+      security:
+        - OAuth2: []
   '/{listingId}':
     get:
       summary: Get Calendar
@@ -217,7 +145,6 @@ paths:
       security:
         - OAuth2: []
 components:
-  schemas: {}
   securitySchemes:
     OAuth2:
       type: oauth2

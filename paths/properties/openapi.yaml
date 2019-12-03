@@ -1,9 +1,9 @@
 openapi: 3.0.0
 tags:
-  - name: calendar
-    description: Belongs to the Calendar API
+  - name: listings
+    description: Endpoints for reading Listing data
   - name: properties
-    description: Belongs to the Properties API
+    description: Endpoints for reading Property data
 info:
   title: Properties API
   version: ''
@@ -19,7 +19,7 @@ paths:
     get:
       summary: Get Listings
       tags:
-        - properties
+        - listings
       responses:
         '200':
           description: OK
@@ -118,7 +118,7 @@ paths:
     get:
       summary: Get Listing by ID
       tags:
-        - properties
+        - listings
       responses:
         '200':
           description: OK
@@ -170,7 +170,8 @@ paths:
   /properties:
     get:
       summary: Get properties
-      tags: []
+      tags:
+        - properties
       responses:
         '200':
           description: OK
@@ -232,7 +233,8 @@ paths:
           type: string
     get:
       summary: Get property by ID
-      tags: []
+      tags:
+        - properties
       responses:
         '200':
           description: OK
@@ -285,7 +287,6 @@ paths:
       security:
         - OAuth2: []
 components:
-  schemas: {}
   securitySchemes:
     OAuth2:
       type: oauth2
