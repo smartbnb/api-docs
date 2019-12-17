@@ -72,6 +72,6 @@ The Smartbnb API responds in JSON format adhering to the following JSON Schema:
 A further explanation of this schema:
 
 - `data`: The requested data, either as an entity or array of entities (if multiple were requested)
-- `_included`: Any included resources added onto the request. See [docs on Includes](./includes.md).
-- `_pagination`: Information on the number of pages available, if the request was paginated. See [pagination docs](./pagination.md).
+- `_included`: Any included resources added onto the request. See [docs on Includes](./3_includes.md).
+- `_pagination`: Information on the number of pages available, if the request was paginated. See [pagination docs](./2_pagination.md).
 - `_meta`: Further information alongside the request, possibly including links to other resources, or any warnings (e.g. if a deprecated version of the resource was requested).
