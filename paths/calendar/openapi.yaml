@@ -2,6 +2,12 @@ openapi: 3.0.0
 tags:
   - name: calendar
     description: Belongs to the Calendar API
+  - name: read
+    description: The endpoint only reads, and does not manipulate data.
+  - name: write
+    description: This endpoint will write data. Use with caution.
+  - name: alpha
+    description: This endpoint is still in VERY EARLY ALPHA and should be treated with caution.
 info:
   title: Calendar API
   version: ''
@@ -148,7 +154,7 @@ paths:
         - OAuth2:
             - 'read:calendar'
     put:
-      summary: ''
+      summary: Update Calendar
       operationId: put-calendar
       responses:
         '201':
