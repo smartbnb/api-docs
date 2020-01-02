@@ -13,13 +13,14 @@ info:
     email: hello@smartbnb.io
 servers:
   - url: 'https://api.smartbnb.io'
-    description: Property & listing endpoints
+    description: 'Property & listing endpoints'
 paths:
   /listings:
     get:
       summary: Get Listings
       tags:
         - listings
+        - read
       responses:
         '200':
           description: OK
@@ -106,7 +107,8 @@ paths:
       operationId: get-listings
       description: "Get all listings that are on channels connected to your smartbnb account.\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/listings'\n```"
       security:
-        - OAuth2: []
+        - OAuth2:
+            - 'read:calendar'
   '/listings/{listingId}':
     parameters:
       - name: listingId
@@ -119,6 +121,7 @@ paths:
       summary: Get Listing by ID
       tags:
         - listings
+        - read
       responses:
         '200':
           description: OK
@@ -166,12 +169,14 @@ paths:
       operationId: get-listing-by-id
       description: "Get a listing from one of your channels by its listing ID\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/listings/{listingId}'\n```"
       security:
-        - OAuth2: []
+        - OAuth2:
+            - 'read:calendar'
   /properties:
     get:
       summary: Get properties
       tags:
         - properties
+        - read
       responses:
         '200':
           description: OK
@@ -222,7 +227,8 @@ paths:
       operationId: get-properties
       description: "Get all the properties from your account\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/properties'\n```"
       security:
-        - OAuth2: []
+        - OAuth2:
+            - 'read:calendar'
   '/properties/{propertyId}':
     parameters:
       - name: propertyId
@@ -235,6 +241,7 @@ paths:
       summary: Get property by ID
       tags:
         - properties
+        - read
       responses:
         '200':
           description: OK
@@ -285,7 +292,8 @@ paths:
           in: query
           name: include
       security:
-        - OAuth2: []
+        - OAuth2:
+            - 'read:calendar'
 components:
   securitySchemes:
     OAuth2:
