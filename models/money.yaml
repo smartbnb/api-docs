@@ -1,8 +1,14 @@
 title: Money
 type: object
+description: |-
+  This representation is used for money throughout this API, for example to get the subtotal for a Reservation or price for a Day.
+
+  The amount is in the subdenomination of the currency - e.g. cents for EUR / USD, pence for GBP, etc.
 properties:
   amount:
     type: integer
+    description: Integer representation of the amount of money in question. E.g. $1.01 is represented as 101. $85 is represented as 8500.
+    example: '8000'
     minimum: 0
   currency:
     type: string
@@ -10,7 +16,7 @@ properties:
     minLength: 3
     maxLength: 3
     pattern: '[A-Z]{3}'
+    description: The 3-letter ISO-4217 currency code.
 required:
   - amount
   - currency
-description: ''
