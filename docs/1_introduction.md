@@ -4,11 +4,13 @@ Welcome to the Smartbnb Public API documentation! This early access release of t
 
 The API documentation will start with a general overview about the design and technology that has been implemented, followed by reference information about specific endpoints.
 
-<!-- theme: info -->
+<!-- theme: warning -->
 
 > #### Invite Only
 >
 > The Smartbnb public API is currently invite-only. If you have not been invited to the testing programme and provided with credentials, you will be unable to make calls to the endpoints described herein.
+>
+> Credentials generated through the Smartbnb website **will not work** with this version of the API at the time of writing.
 
 ## Requests
 
