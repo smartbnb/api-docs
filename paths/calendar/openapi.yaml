@@ -3,7 +3,7 @@ tags:
   - name: calendar
     description: Belongs to the Calendar API
   - name: read
-    description: The endpoint only reads, and does not manipulate data.
+    description: 'The endpoint only reads, and does not manipulate data.'
   - name: write
     description: This endpoint will write data. Use with caution.
   - name: alpha
@@ -159,7 +159,7 @@ paths:
       responses:
         '201':
           description: Created
-      description: "Update a Listing's pricing and availability for the given dates. This request is handled asynchronously, and therefore the pricing on your listing may take a few seconds to update after receiving a response.\n\n**Please note that updating availability for HomeAway is, at this time, not functional, and therefore for listings on HomeAway the `available` boolean value in the payload is ignored. You may update pricing for HomeAway as normal, though.**\n\n### Example\n\n```bash\ncurl -X PUT \\\n  https://api.smartbnb.io/calendar/123456 \\\n  -H 'Authorization: Bearer <TOKEN>' \\\n  -H 'content-type: application/vnd.smartbnb.20193112+json' \\\n  --data '[\n\t{\n\t\t\"date\": \"2020-01-11\",\n\t\t\"available\": true,\n\t\t\"price\": {\n\t\t\t\"amount\": 7700,\n\t\t\t\"currency\": \"USD\"\n\t\t}\n\t},\n\t{\n\t\t\"date\": \"2020-01-12\",\n\t\t\"available\": true,\n\t\t\"price\": {\n\t\t\t\"amount\": 7800,\n\t\t\t\"currency\": \"USD\"\n\t\t}\n\t}\n]'\n```"
+      description: "Update a Listing's pricing and availability for the given dates. This request is handled asynchronously, and therefore the pricing on your listing may take a few seconds to update after receiving a response.\n\n**Please note that updating availability for HomeAway is, at this time, not functional, and therefore for listings on HomeAway the `available` boolean value in the payload is ignored. You may update pricing for HomeAway as normal, though.**\n\n### Example\n\n```bash\ncurl -X PUT \\\n  https://api.smartbnb.io/calendar/123456 \\\n  -H 'Authorization: Bearer <TOKEN>' \\\n  -H 'content-type: application/vnd.smartbnb.20193112+json' \\\n  --data '[\n    {\n      \"date\": \"2020-01-11\",\n      \"available\": true,\n      \"price\": {\n        \"amount\": 7700,\n      }\n    },\n    {\n      \"date\": \"2020-01-12\",\n      \"available\": true,\n      \"price\": {\n        \"amount\": 7800,\n      }\n    }\n]'\n```"
       tags:
         - calendar
         - write
@@ -183,30 +183,41 @@ paths:
                     description: 'The date to set pricing and availability for, in Y-m-d format.'
                   available:
                     type: boolean
-                    description: Whether the day should be available for booking.
+                    description: Whether the day should be available for booking. Omit if you want to leave as-is in the provider.
                   price:
-                    $ref: ../../models/money.yaml
+                    type: object
+                    required:
+                      - amount
+                    properties:
+                      amount:
+                        type: integer
+                        description: Integer representation of the amount of money in question. E.g. $1.01 is represented as 101. $85 is represented as 8500.
                 required:
                   - date
-                  - available
                   - price
             examples:
-              Example:
+              Example with pricing and availabiliy:
                 value:
                   - date: '2020-01-11'
                     available: true
                     price:
                       amount: 7700
-                      currency: USD
                   - date: '2020-01-12'
                     available: true
                     price:
                       amount: 7800
-                      currency: USD
+              Example with pricing only:
+                value:
+                  - date: '2020-01-11'
+                    price:
+                      amount: 7700
+                  - date: '2020-01-12'
+                    price:
+                      amount: 7800
         description: |
           The request payload should be an array of days including pricing and availability version. There are some constraints on this:
 
-          - The currency supplied **MUST** match the currency of the listing. This is to avoid accidentally updating the pricing to an unexpected amount by supplying the wrong currency.
+          - The price must be sent in the listing's default currency.
           - The endpoint will not accept more than 60 dates to update at once.
           - It is not required, but _highly recommended_ to use contiguous days if possible. This allows us to batch the requests we make to providers.
 components:
