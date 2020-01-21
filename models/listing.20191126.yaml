@@ -85,8 +85,27 @@ properties:
   rating:
     type: number
     format: float
-    minimum: 0
     multipleOf: 0.1
+  url:
+    type: string
+    format: uri
+    example: 'https://airbnb.com/rooms/12345'
+    description: The provider URL to the listing.
+  user_id:
+    type: string
+    description: "The provider's identifier for the user who owns the listing."
+  room_type:
+    type: string
+    enum:
+      - ENTIRE_HOME
+      - SHARED_ROOM
+      - PRIVATE ROOM
+      - UNKNOWN
+      - HOTEL_ROOM
+  currency:
+    type: string
+    example: EUR
+    description: The primary currency of the listing.
 required:
   - id
   - provider
@@ -99,3 +118,7 @@ required:
   - checkout
   - capacity
   - rating
+  - url
+  - user_id
+  - room_type
+  - currency
