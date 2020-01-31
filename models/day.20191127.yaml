@@ -1,5 +1,9 @@
 title: Day
 type: object
+description: |-
+  Representation of a Day in a Listing’s calendar, including its pricing and availability.
+
+  **Latest version: 20191127**
 properties:
   date:
     type: string
@@ -31,12 +35,12 @@ properties:
         type: boolean
   price:
     $ref: ./money.yaml
+  min_stay:
+    type: integer
+    description: Minimum stay in nights
 required:
   - date
   - day
   - status
   - price
-description: |-
-  Representation of a Day in a Listing’s calendar, including its pricing and availability.
-
-  **Latest version: 20191127**
+  - min_stay
