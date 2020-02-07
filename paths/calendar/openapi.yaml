@@ -219,6 +219,15 @@ paths:
                   - date: '2020-01-12'
                     price:
                       amount: 7800
+              Example with minimum stay:
+                value:
+                  - date: '2021-11-11'
+                    min_stay: 10
+                    price:
+                      amount: 21900
+                  - date: '2021-11-02'
+                    price:
+                      amount: 20900
         description: |
           The request payload should be an array of days including pricing and availability version. There are some constraints on this:
 
