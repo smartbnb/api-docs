@@ -7,6 +7,7 @@ description: |-
 x-examples:
   Example:
     id: 121.1005001.1234567
+    property_id: 12345
     provider: HOMEAWAY
     name: Relaxing villa by the sea
     picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
@@ -35,6 +36,8 @@ properties:
   id:
     type: string
     description: The Listing ID from the provider.
+  property_id:
+    type: integer
   provider:
     type: string
     enum:
@@ -122,3 +125,4 @@ required:
   - user_id
   - room_type
   - currency
+  - property_id
