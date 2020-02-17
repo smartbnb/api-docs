@@ -111,6 +111,7 @@ properties:
     description: The primary currency of the listing.
 required:
   - id
+  - property_id
   - provider
   - name
   - picture
@@ -125,4 +126,3 @@ required:
   - user_id
   - room_type
   - currency
-  - property_id

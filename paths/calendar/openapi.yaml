@@ -159,8 +159,12 @@ paths:
       operationId: put-calendar
       responses:
         '202':
-          description: Accepted
-      description: "Update a Listing's pricing, availability, and minimum stay for the given dates. This request is handled asynchronously, and therefore the pricing on your listing may take a few seconds to update after receiving a response.\n\n**Please note that updating availability for HomeAway is, at this time, not functional, and therefore for listings on HomeAway the `available` boolean value in the payload is ignored. You may update pricing for HomeAway as normal, though.**\n\n### Example\n\n```bash\ncurl -X PUT \\\n  https://api.smartbnb.io/calendar/123456 \\\n  -H 'Authorization: Bearer <TOKEN>' \\\n  -H 'content-type: application/vnd.smartbnb.20191231+json' \\\n  --data '[\n    {\n      \"date\": \"2020-01-11\",\n      \"available\": true,\n      \"min_stay\": 3,\n      \"price\": {\n        \"amount\": 7700,\n      }\n    },\n    {\n      \"date\": \"2020-01-12\",\n      \"available\": true,\n      \"price\": {\n        \"amount\": 7800,\n      }\n    }\n]'\n```"
+          description: 'Your request has been accepted and placed onto a queue to be dealt with asynchronously. In most cases, this means a few seconds.'
+        '409':
+          description: Conflict
+        '':
+          description: 'The calendar update has been accepted, and placed onto a queue to be dealt with asynchronously.'
+      description: "Update a Listing's pricing, availability, and minimum stay for the given dates. This request is handled asynchronously, and therefore the pricing on your listing may take a few seconds to update after receiving a response.\n\nIt's possible to send a Property ID instead of a Listing ID, if you also send the query parameter `type=property`. There are two important distinctions to be made when sending a Property ID:\n\n1. Pricing for all listings within that Property will be updated, not just for one.\n2. A Markup will be applied to each price. This markup must be pre-configured in the Smartbnb website first. Wihout this pre-configuration, this endpoint will fail with a `409 Conflict` response.\n\n**Please note that updating availability for HomeAway is, at this time, not functional, and therefore for listings on HomeAway the `available` boolean value in the payload is ignored. You may update pricing for HomeAway as normal, though.**\n\n### Example\n\n```bash\ncurl -X PUT \\\n  https://api.smartbnb.io/calendar/123456 \\\n  -H 'Authorization: Bearer <TOKEN>' \\\n  -H 'content-type: application/vnd.smartbnb.20191231+json' \\\n  --data '[\n    {\n      \"date\": \"2020-01-11\",\n      \"available\": true,\n      \"min_stay\": 3,\n      \"price\": {\n        \"amount\": 7700,\n      }\n    },\n    {\n      \"date\": \"2020-01-12\",\n      \"available\": true,\n      \"price\": {\n        \"amount\": 7800,\n      }\n    }\n]'\n```"
       tags:
         - calendar
         - write
@@ -234,6 +238,20 @@ paths:
           - The price must be sent in the listing's default currency.
           - The endpoint will not accept more than 60 dates to update at once.
           - It is not required, but _highly recommended_ to use contiguous days if possible. This allows us to batch the requests we make to providers.
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - property
+          in: query
+          name: type
+          description: Set this to `property` to set pricing for all listings in a property. Caveats apply.
+    parameters:
+      - schema:
+          type: string
+        name: listingId
+        in: path
+        required: true
 components:
   securitySchemes:
     OAuth2:
