@@ -225,10 +225,18 @@ paths:
                       current_page: 2
                       total_pages: 51
       operationId: get-properties
-      description: "Get all the properties from your account\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/properties'\n```"
+      description: "Get all the properties from your account\n\n### Allowed Includes\n\n- listings\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/properties'\n```"
       security:
         - OAuth2:
             - 'read:calendar'
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - listings
+          in: query
+          name: include
+          description: Other entities to include
   '/properties/{propertyId}':
     parameters:
       - name: propertyId
@@ -291,6 +299,7 @@ paths:
               - listings
           in: query
           name: include
+          description: Other entities to include
       security:
         - OAuth2:
             - 'read:calendar'
