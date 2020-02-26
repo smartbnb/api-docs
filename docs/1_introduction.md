@@ -4,21 +4,13 @@ Welcome to the Smartbnb Public API documentation! This early access release of t
 
 The API documentation will start with a general overview about the design and technology that has been implemented, followed by reference information about specific endpoints.
 
-<!-- theme: warning -->
-
-> #### Invite Only
->
-> The Smartbnb public API is currently invite-only. If you have not been invited to the testing programme and provided with credentials, you will be unable to make calls to the endpoints described herein.
->
-> Credentials generated through the Smartbnb website **will not work** with this version of the API at the time of writing.
-
 ## Requests
 
 The Smartbnb API conforms to the [REST Architectural Standards](https://en.wikipedia.org/wiki/Representational_state_transfer). Entities are represented as resources, each one with an URL and unique identifier, and can be manipulated with the `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` HTTP methods. All methods with the exception of `POST` are idempotent.
 
 ## Security
 
-The API follows [OAuth 2.0](https://tools.ietf.org/html/rfc6749) to protect its endpoints. You may authorise your application to make requests on your account's behalf by using the Client Credentials flow. 
+The API follows [OAuth 2.0](https://tools.ietf.org/html/rfc6749) to protect its endpoints. You may authorise your application to make requests on your account's behalf by using the Client Credentials flow. Generate API credentials from the "Apps" page in your Smartbnb account.
 
 [More information on security](./2_security.md).
 
