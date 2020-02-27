@@ -45,11 +45,6 @@ properties:
     example: '-0930'
     minLength: 5
     maxLength: 5
-  listings:
-    type: integer
-    example: 3
-    minimum: 0
-    description: The amount of listings associated with this property
   features:
     type: object
     description: The features that are enabled / disabled for this property
@@ -76,6 +71,5 @@ required:
   - picture
   - address
   - timezone
-  - listings
   - features
   - listed
