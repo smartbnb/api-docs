@@ -9,7 +9,8 @@ x-examples:
     id: 121.1005001.1234567
     property_id: 12345
     provider: HOMEAWAY
-    name: Relaxing villa by the sea
+    name: Flat 123
+    nickname: Relaxing villa by the sea
     picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
     address:
       apartment: 37a
@@ -46,6 +47,10 @@ properties:
     description: Where this listing is listed.
   name:
     type: string
+  nickname:
+    type:
+      - string
+      - 'null'
   picture:
     type: string
     format: uri
@@ -114,6 +119,7 @@ required:
   - property_id
   - provider
   - name
+  - nickname
   - picture
   - address
   - timezone
