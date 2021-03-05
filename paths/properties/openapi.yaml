@@ -13,7 +13,7 @@ info:
     email: hello@smartbnb.io
 servers:
   - url: 'https://api.smartbnb.io'
-    description: 'Property & listing endpoints'
+    description: Property & listing endpoints
 paths:
   /listings:
     get:
@@ -32,7 +32,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: ../../models/listing.20191126.yaml
+                      $ref: ../../models/listing.20210308.yaml
                   _pagination:
                     $ref: ../../models/pagination.yaml
                 required:
@@ -43,9 +43,11 @@ paths:
                   value:
                     data:
                       - id: '12345'
+                        property_id: 123
                         provider: AIRBNB
                         name: Relaxing Villa near the sea
                         picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+                        currency: EUR
                         address:
                           apartment: 37a
                           street: Senefelderplatz
@@ -105,7 +107,20 @@ paths:
                       current_page: 2
                       total_pages: 51
       operationId: get-listings
-      description: "Get all listings that are on channels connected to your smartbnb account.\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/listings'\n```"
+      description: |-
+        Get all listings that are on channels connected to your smartbnb account.
+
+        ### Allowed Includes
+
+        (none)
+
+        ### Example
+
+        ```bash
+        curl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \
+             -H 'Authorization: Bearer <API TOKEN>' \
+          'https://api.smartbnb.io/listings'
+        ```
       security:
         - OAuth2:
             - 'read:calendar'
@@ -131,7 +146,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: ../../models/listing.20191126.yaml
+                    $ref: ../../models/listing.20210308.yaml
                 required:
                   - data
               examples:
@@ -139,9 +154,11 @@ paths:
                   value:
                     data:
                       id: '12345'
+                      property_id: 123
                       provider: AIRBNB
                       name: Relaxing Villa near the sea
                       picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+                      currency: EUR
                       address:
                         apartment: 37a
                         street: Senefelderplatz
@@ -167,10 +184,27 @@ paths:
                         rel: listing
                         version: '20190902'
       operationId: get-listing-by-id
-      description: "Get a listing from one of your channels by its listing ID\n\n### Allowed Includes\n\n(none)\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/listings/{listingId}'\n```"
+      description: |-
+        Get a listing from one of your channels by its listing ID
+
+        ###
+
+        ### Allowed Includes
+
+        (none)
+
+        ### Example
+
+        ```bash
+        curl -H 'Content-Type: application/vnd.smartbnb.20210222+json' \
+             -H 'Authorization: Bearer <API TOKEN>' \
+          'https://api.smartbnb.io/listings/{listingId}?provider=airbnb'
+        ```
       security:
         - OAuth2:
             - 'read:calendar'
+      parameters:
+        - $ref: '#/components/parameters/provider-required'
   /properties:
     get:
       summary: Get properties
@@ -188,7 +222,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: ../../models/property.20191121.yaml
+                      $ref: ../../models/property.20210308.yaml
                   _pagination:
                     $ref: ../../models/pagination.yaml
                 required:
@@ -200,6 +234,7 @@ paths:
                       - id: '123456'
                         name: Room with a view of a tree
                         picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+                        currency: EUR
                         address:
                           apartment: 37a
                           street: Senefelderplatz
@@ -225,7 +260,20 @@ paths:
                       current_page: 2
                       total_pages: 51
       operationId: get-properties
-      description: "Get all the properties from your account\n\n### Allowed Includes\n\n- listings\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/properties'\n```"
+      description: |-
+        Get all the properties from your account
+
+        ### Allowed Includes
+
+        - listings
+
+        ### Example
+
+        ```bash
+        curl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \
+             -H 'Authorization: Bearer <API TOKEN>' \
+          'https://api.smartbnb.io/properties'
+        ```
       security:
         - OAuth2:
             - 'read:calendar'
@@ -259,7 +307,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: ../../models/property.20191121.yaml
+                    $ref: ../../models/property.20210308.yaml
                 required:
                   - data
               examples:
@@ -269,6 +317,7 @@ paths:
                       id: '123456'
                       name: Room with a view of a tree
                       picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+                      currency: EUR
                       address:
                         apartment: 37a
                         street: Senefelderplatz
@@ -291,7 +340,20 @@ paths:
                         rel: property
                         version: '20191121'
       operationId: get-property-by-id
-      description: "Get a property by its unique ID\n\n### Allowed Includes\n\n- `listings`: Include the individual listings associated with that property\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/properties/{propertyId}'\n```"
+      description: |-
+        Get a property by its unique ID
+
+        ### Allowed Includes
+
+        - `listings`: Include the individual listings associated with that property
+
+        ### Example
+
+        ```bash
+        curl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \
+             -H 'Authorization: Bearer <API TOKEN>' \
+          'https://api.smartbnb.io/properties/{propertyId}'
+        ```
       parameters:
         - schema:
             type: string
@@ -312,3 +374,26 @@ components:
           tokenUrl: 'https://auth.smartbnb.io/oauth/token'
           scopes:
             'read:calendar': read calendar data
+  parameters:
+    provider-required:
+      name: provider
+      in: query
+      required: true
+      schema:
+        type: string
+        enum:
+          - airbnb
+          - homeaway
+          - booking
+      description: The provider for a listing.
+    provider-optional:
+      name: provider
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - airbnb
+          - homeaway
+          - booking
+      description: The provider for a listing.

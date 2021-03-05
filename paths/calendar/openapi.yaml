@@ -47,6 +47,7 @@ paths:
                     data:
                       - uuid: 48b62e97-91bf-4c6f-af49-6dc71c16a16a
                         guest_uuid: 32a46404-1fca-49b4-966e-c88a76886135
+                        listing_id: '12345'
                         provider: AIRBNB
                         reservation_code: ABSDHEUSHM
                         status: ACCEPTED
@@ -79,7 +80,27 @@ paths:
                       current_page: 1
                       total_pages: 1
       operationId: get-reservations
-      description: "Given listings and (optionally) check-in dates, returns a filtered list of reservations.\n\n### URL parameters\n\n- `listings[]`: Array of listing IDs to get reservations for - use as: `?listings[]=123&listings[]=456`. These are the IDs that are available in HomeAway / Airbnb, and you can also get them from the `GET /listings` endpoint.\n- `start_date`: Optional, find reservations with check-in dates after this day. Y-m-d format, defaults to today.\n- `end_date`: Optional, find reservations with check-in dates before this day. Y-m-d format, defaults to `start_date` + 14 days.\n\n\n### Allowed Includes\n\n- `guest`\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/reservations?listings[]=123456&listings[]=654321&start_date=2019-08-31&end_date=2019-09-30'\n```"
+      description: |-
+        Given listings and (optionally) check-in dates, returns a filtered list of reservations.
+
+        ### URL parameters
+
+        - `listings[]`: Array of listing IDs to get reservations for - use as: `?listings[]=123&listings[]=456`. These are the IDs that are available in HomeAway / Airbnb, and you can also get them from the `GET /listings` endpoint.
+        - `start_date`: Optional, find reservations with check-in dates after this day. Y-m-d format, defaults to today.
+        - `end_date`: Optional, find reservations with check-in dates before this day. Y-m-d format, defaults to `start_date` + 14 days.
+
+
+        ### Allowed Includes
+
+        - `guest`
+
+        ### Example
+
+        ```bash
+        curl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \
+             -H 'Authorization: Bearer <API TOKEN>' \
+          'https://api.smartbnb.io/calendar/reservations?listings[]=123456&listings[]=654321&start_date=2019-08-31&end_date=2019-09-30'
+        ```
       parameters:
         - schema:
             type: string
@@ -103,6 +124,22 @@ paths:
           description: The ID of the listing to retrieve the calendar for
           schema:
             type: string
+        - in: unknown
+        - schema:
+            type: string
+            format: date
+            example: '2020-12-25'
+          in: query
+          name: start_date
+          description: Date to pull the calendar from.
+        - schema:
+            type: string
+            format: date
+            example: '2020-12-25'
+          in: query
+          name: end_date
+          description: Date to pull the calendar to.
+        - $ref: ../properties/openapi.yaml#/components/parameters/provider-required
       responses:
         '200':
           description: OK
@@ -150,7 +187,27 @@ paths:
                         rel: calendar
                         version: '20190611'
       operationId: get-calendar
-      description: "Given a listing ID and (optionally) dates, returns the Pricing and Availability for the listing in calendar format.\n\n### URL parameters\n\n- `start_date`: Optional, start date for the calendar range in `Y-m-d` format, defaults to today.\n- `end_date`: Optional, end date for the calendar range in `Y-m-d` format, defaults to `start_date` + 14 days.\n\n\n### Allowed Includes\n\nNone.\n\n### Example\n\n```bash\ncurl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \\\n     -H 'Authorization: Bearer <API TOKEN>' \\\n  'https://api.smartbnb.io/calendar/123456&start_date=2019-08-31&end_date=2019-09-30'\n```\n"
+      description: |
+        Given a listing ID and (optionally) dates, returns the Pricing and Availability for the listing in calendar format.
+
+        ### URL parameters
+
+        - `provider`: The provider of the listing - either `airbnb`, `booking`, or `homeaway`.
+        - `start_date`: Optional, start date for the calendar range in `Y-m-d` format, defaults to today.
+        - `end_date`: Optional, end date for the calendar range in `Y-m-d` format, defaults to `start_date` + 14 days.
+
+
+        ### Allowed Includes
+
+        None.
+
+        ### Example
+
+        ```bash
+        curl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \
+             -H 'Authorization: Bearer <API TOKEN>' \
+          'https://api.smartbnb.io/calendar/123456?provider=airbnb&start_date=2019-08-31&end_date=2019-09-30'
+        ```
       security:
         - OAuth2:
             - 'read:calendar'
@@ -173,7 +230,43 @@ paths:
                     reason_phrase: 'No markup price found for listing 12345 was found, refusing to set price for a property without a markup'
         '':
           description: 'The calendar update has been accepted, and placed onto a queue to be dealt with asynchronously.'
-      description: "Update a Listing's pricing, availability, and minimum stay for the given dates. This request is handled asynchronously, and therefore the pricing on your listing may take a few seconds to update after receiving a response.\n\nIt's possible to send a Property ID instead of a Listing ID, if you also send the query parameter `type=property`. There are two important distinctions to be made when sending a Property ID:\n\n1. Pricing for all listings within that Property will be updated, not just for one.\n2. A Markup will be applied to each price. This markup must be pre-configured in the Smartbnb website first. Wihout this pre-configuration, this endpoint will fail with a `409 Conflict` response.\n\n**Please note that updating availability for HomeAway is, at this time, not functional, and therefore for listings on HomeAway the `available` boolean value in the payload is ignored. You may update pricing for HomeAway as normal, though.**\n\n### Example\n\n```bash\ncurl -X PUT \\\n  https://api.smartbnb.io/calendar/123456 \\\n  -H 'Authorization: Bearer <TOKEN>' \\\n  -H 'content-type: application/vnd.smartbnb.20191231+json' \\\n  --data '[\n    {\n      \"date\": \"2020-01-11\",\n      \"available\": true,\n      \"min_stay\": 3,\n      \"price\": {\n        \"amount\": 7700,\n      }\n    },\n    {\n      \"date\": \"2020-01-12\",\n      \"available\": true,\n      \"price\": {\n        \"amount\": 7800,\n      }\n    }\n]'\n```"
+      description: |-
+        Update a Listing's pricing, availability, and minimum stay for the given dates. This request is handled asynchronously, and therefore the pricing on your listing may take a few seconds to update after receiving a response.
+
+        It's possible to send a Property ID instead of a Listing ID, if you also send the query parameter `type=property`. There are two important distinctions to be made when sending a Property ID:
+
+        1. Pricing for all listings within that Property will be updated, not just for one.
+        2. A Markup will be applied to each price. This markup must be pre-configured in the Smartbnb website first. Wihout this pre-configuration, this endpoint will fail with a `409 Conflict` response.
+
+        When sending a **Listing ID**, the Provider must be added in the query string: `provider=airbnb`, `provider=booking`, or `provider=homeaway`. This is not required when sending a Property ID.
+
+        **Please note that updating availability for HomeAway is, at this time, not functional, and therefore for listings on HomeAway the `available` boolean value in the payload is ignored. You may update pricing for HomeAway as normal, though.**
+
+        ### Example
+
+        ```bash
+        curl -X PUT \
+          https://api.smartbnb.io/calendar/123456?provider=airbnb \
+          -H 'Authorization: Bearer <TOKEN>' \
+          -H 'content-type: application/vnd.smartbnb.20191231+json' \
+          --data '[
+            {
+              "date": "2020-01-11",
+              "available": true,
+              "min_stay": 3,
+              "price": {
+                "amount": 7700,
+              }
+            },
+            {
+              "date": "2020-01-12",
+              "available": true,
+              "price": {
+                "amount": 7800,
+              }
+            }
+        ]'
+        ```
       tags:
         - calendar
         - write
@@ -255,6 +348,7 @@ paths:
           in: query
           name: type
           description: Set this to `property` to set pricing for all listings in a property. Caveats apply.
+        - $ref: ../properties/openapi.yaml#/components/parameters/provider-optional
     parameters:
       - schema:
           type: string
