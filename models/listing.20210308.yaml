@@ -3,14 +3,14 @@ type: object
 description: |-
   Representation of a listing on a provider.
 
-  **Latest version: 20191126**
+  **Latest version: 20210308**
 x-examples:
   Example:
     id: 121.1005001.1234567
     property_id: 12345
     provider: HOMEAWAY
     name: Flat 123
-    nickname: Relaxing villa by the sea
+    public_name: Relaxing villa by the sea
     picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
     address:
       apartment: 37a
@@ -47,7 +47,7 @@ properties:
     description: Where this listing is listed.
   name:
     type: string
-  nickname:
+  public_name:
     type:
       - string
       - 'null'
@@ -58,7 +58,7 @@ properties:
     $ref: ./address.yaml
   timezone:
     type: string
-    description: "Numeric offset of the listing's timezone from UTC"
+    description: Numeric offset of the listing's timezone from UTC
     example: '-0930'
     minLength: 5
     maxLength: 5
@@ -101,7 +101,7 @@ properties:
     description: The provider URL to the listing.
   user_id:
     type: string
-    description: "The provider's identifier for the user who owns the listing."
+    description: The provider's identifier for the user who owns the listing.
   room_type:
     type: string
     enum:

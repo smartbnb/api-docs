@@ -3,12 +3,13 @@ type: object
 description: |-
   Representation of a property.
 
-  **Latest version: 20191121**
+  **Latest version: 20210308**
 x-examples:
   Example:
     id: '123456'
     name: Room with a view of a tree
     picture: 'https://cdn2.thecatapi.com/images/d9m.jpg'
+    currency: EUR
     address:
       apartment: 37a
       street: Senefelderplatz
@@ -65,6 +66,10 @@ properties:
   listed:
     type: boolean
     description: Whether the property is listed on provider websites
+  currency:
+    type: string
+    minLength: 3
+    maxLength: 3
 required:
   - id
   - name
@@ -73,3 +78,4 @@ required:
   - timezone
   - features
   - listed
+  - currency
