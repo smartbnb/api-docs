@@ -5,12 +5,14 @@ As we iterate on the Smartbnb Public API, it's possible that we will make change
 This version takes the form of a datestamp, and should be sent in the `Content-Type` HTTP header of the request, like so:
 
 ```http
-Content-Type: `application/vnd.smartbnb.20190904+json`
+Content-Type: `application/vnd.smartbnb.20210308+json`
 ```
 
 The requested datestamp should be the latest known working date for a resource. If no datestamp is sent, the API will respond with the latest version of the resource, along with a warning.
 
 So for example, if a request for the `/foo` endpoint was made without a version header on 2019-09-04 and your client application succeded at processing the response, then this date should be sent with all API requests for that endpoint in production. This effectively locks the response format you'll receive to this tested-against format.
+
+In short: **send the date you have last tested your API integration on**.
 
 > #### Invalid version headers
 > 
