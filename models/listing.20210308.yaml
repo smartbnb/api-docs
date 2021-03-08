@@ -24,6 +24,7 @@ x-examples:
         longitude: 4.364562
       display: '37a Senefelderplatz, 10405 Berlin, DE'
     timezone: '+0200'
+    currency: EUR
     available: true
     checkin: '15:30 +0200'
     checkout: '10:30 +0200'
@@ -56,6 +57,10 @@ properties:
     format: uri
   address:
     $ref: ./address.yaml
+  currency:
+    type: string
+    example: EUR
+    description: The primary currency of the listing.
   timezone:
     type: string
     description: Numeric offset of the listing's timezone from UTC
@@ -110,10 +115,6 @@ properties:
       - PRIVATE ROOM
       - UNKNOWN
       - HOTEL_ROOM
-  currency:
-    type: string
-    example: EUR
-    description: The primary currency of the listing.
 required:
   - id
   - property_id
@@ -122,6 +123,7 @@ required:
   - nickname
   - picture
   - address
+  - currency
   - timezone
   - available
   - checkin
@@ -131,4 +133,3 @@ required:
   - url
   - user_id
   - room_type
-  - currency
