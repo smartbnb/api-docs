@@ -16,7 +16,7 @@ The API follows [OAuth 2.0](https://tools.ietf.org/html/rfc6749) to protect its 
 
 ## Versioning
 
-To reduce risk when using the Smartbnb Public API in production, we _highly recommend_ sending a Version header along with all requests. 
+To reduce risk when using the Smartbnb Public API in production, you **must** send a Content-Type header along with all requests containing the version of the API you are using. If this is not sent, you will be served the newest version of the API, including BC breaking changes. 
 
 [More information on versioning](./3_versioning.md).
 
