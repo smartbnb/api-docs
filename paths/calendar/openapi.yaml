@@ -197,9 +197,9 @@ paths:
       description: |
         Given a Listing ID or Property ID, returns the Pricing and Availability in calendar format.
 
-        When sending a **Property ID**, you should also send the query parameter `type=property`. There are two important distinco show the take-home price of a Listing within that Property. Note that if your prices vary between listings, and this isn't accounted for by your Markup rates, you may not see the prices you expect, and it's recommended to cross-reference these prices on a per-listing basis instead. 
+        When sending a **Listing ID**, the Provider must be added in the query string: `provider=airbnb`, `provider=booking`, or `provider=homeaway`. This is not required when sending a Property ID. The returned pricing will show the marked-up rate for the requested listing.
 
-        When sending a **Listing ID**, the Provider must be added in the query string: `provider=airbnb`, `provider=booking`, or `provider=homeaway`. This is not required when sending a Property ID.
+        When sending a **Property ID**, you should also send the query parameter `type=property`. The returned pricing will show the take-home price of a Listing within that Property; so with the markup removed. Note that if your prices vary between listings, and this isn't accounted for by your Markup rates, you may not see the prices you expect, and it's recommended to cross-reference these prices on a per-listing basis instead. 
 
         ### URL parameters
 
