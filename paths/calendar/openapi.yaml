@@ -60,8 +60,8 @@ paths:
                           children: 2
                           pets: 0
                           infants: 0
-                        check_in: '2019-07-22T14:00:00+02:00'
-                        check_out: '2019-07-24T10:00:00+02:00'
+                        checkin: '2019-07-22'
+                        checkout: '2019-07-24'
                         subtotal:
                           amount: 19700
                           currency: EUR
@@ -111,20 +111,19 @@ paths:
       security:
         - OAuth2:
             - 'read:calendar'
-  '/{id}':
+  '/{propertyId}':
     get:
       summary: Get Calendar
       tags:
         - calendar
         - read
       parameters:
-        - name: listingId
+        - name: propertyId
           in: path
           required: true
           description: The ID of the listing to retrieve the calendar for
           schema:
             type: string
-        - in: unknown
         - schema:
             type: string
             format: date
@@ -139,14 +138,6 @@ paths:
           in: query
           name: end_date
           description: Date to pull the calendar to.
-        - $ref: ../properties/openapi.yaml#/components/parameters/provider-optional
-        - schema:
-            type: string
-            enum:
-              - property
-          in: query
-          name: type
-          description: Set to `property` to query by Property ID.
       responses:
         '200':
           description: OK
@@ -168,16 +159,18 @@ paths:
                       days:
                         - date: '2020-01-11'
                           day: SATURDAY
+                          min_stay: 2
                           status:
-                            name: AVAILABLE
+                            reason: AVAILABLE
                             available: true
                           price:
                             amount: 130000
                             currency: EUR
                         - date: '2020-01-12'
                           day: SUNDAY
+                          min_stay: 3
                           status:
-                            name: BLOCKED
+                            reason: BLOCKED
                             available: false
                           price:
                             amount: 130000
@@ -185,7 +178,7 @@ paths:
                         - date: '2020-01-13'
                           day: MONDAY
                           status:
-                            name: RESERVED
+                            reason: RESERVED
                             available: false
                           price:
                             amount: 120050
@@ -195,16 +188,12 @@ paths:
                         version: '20190611'
       operationId: get-calendar
       description: |
-        Given a Listing ID or Property ID, returns the Pricing and Availability in calendar format.
+        Given a Property ID, returns the Pricing and Availability in calendar format.
 
-        When sending a **Listing ID**, the Provider must be added in the query string: `provider=airbnb`, `provider=booking`, or `provider=homeaway`. This is not required when sending a Property ID. The returned pricing will show the marked-up rate for the requested listing.
-
-        When sending a **Property ID**, you should also send the query parameter `type=property`. The returned pricing will show the take-home price of a Listing within that Property; so with the markup removed. Note that if your prices vary between listings, and this isn't accounted for by your Markup rates, you may not see the prices you expect, and it's recommended to cross-reference these prices on a per-listing basis instead. 
+        The returned pricing will show the take-home price of a Listing within the requested Property - so with any markups removed. Note that if your prices vary between Providers or Listings, and this isn't accounted for by your markup rates, you may not see the prices you expect; it's recommended to account for price differences by setting markup prices from within the Smartbnb web application.
 
         ### URL parameters
 
-        - `provider`: The provider of the listing - either `airbnb`, `booking`, or `homeaway`. Required if using a Listing ID.
-        - `type`: Set to `property` to update the calendar for an entire property across all providers, rather than a single listing.
         - `start_date`: Optional, start date for the calendar range in `Y-m-d` format, defaults to today.
         - `end_date`: Optional, end date for the calendar range in `Y-m-d` format, defaults to `start_date` + 14 days.
 
@@ -216,9 +205,9 @@ paths:
         ### Example
 
         ```bash
-        curl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \
+        curl -H 'Content-Type: application/vnd.smartbnb.20210330+json' \
              -H 'Authorization: Bearer <API TOKEN>' \
-          'https://api.smartbnb.io/calendar/123456?provider=airbnb&start_date=2019-08-31&end_date=2019-09-30'
+          'https://api.smartbnb.io/calendar/123456?start_date=2019-08-31&end_date=2019-09-30'
         ```
       security:
         - OAuth2:
@@ -240,32 +229,25 @@ paths:
                   value:
                     status_code: 409
                     reason_phrase: 'No markup price found for listing 12345 was found, refusing to set price for a property without a markup'
-        '':
-          description: 'The calendar update has been accepted, and placed onto a queue to be dealt with asynchronously.'
       description: |-
-        Given a Listing ID or Property ID, update pricing, availability, and minimum stay for the given dates. This request is handled asynchronously, and therefore the pricing on your listing may take a few seconds to update after receiving a response.
+        Given a Property ID, update pricing, availability, and minimum stay for the given dates. This request is handled asynchronously, and therefore the pricing on your listings may take a few seconds to update after receiving a response.
 
-        When sending a **Property ID**, you should also send the query parameter `type=property`. There are two important distinctions to be made when sending a Property ID:
+        Please note that:
 
         1. Pricing, availability, and minimum stay for all listings within that Property will be updated, not just for one.
-        2. A Markup will be applied to each price. This markup must be pre-configured in the Smartbnb website first. Wihout this pre-configuration, this endpoint will fail with a `409 Conflict` response.
+        2. Pricing is sent in the currency for your property, and should be sent as an integer in the lowest denomination of the currency (so $12.34 becomes 1234). Be aware that different providers may handle this pricing differently - for example Airbnb rounds pricing down to the nearest dollar.
+        2. A Markup will be applied to each price. This markup must be pre-configured in the Smartbnb web application first. Wihout this pre-configuration, this endpoint will fail with a `409 Conflict` response.
 
-        When sending a **Listing ID**, the Provider must be added in the query string: `provider=airbnb`, `provider=booking`, or `provider=homeaway`. This is not required when sending a Property ID.
 
         **Please note that updating availability for HomeAway is, at this time, not functional, and therefore for listings on HomeAway the `available` boolean value in the payload is ignored. You may update pricing and minimum stay for HomeAway as normal, though.**
-
-        ### URL parameters
-
-        - `provider`: The provider of the listing - either `airbnb`, `booking`, or `homeaway`. Required if using a Listing ID.
-        - `type`: Set to `property` to update the calendar for an entire property across all providers, rather than a single listing.
 
         ### Example
 
         ```bash
         curl -X PUT \
-          https://api.smartbnb.io/calendar/123456?provider=airbnb \
+          https://api.smartbnb.io/calendar/123456 \
           -H 'Authorization: Bearer <TOKEN>' \
-          -H 'content-type: application/vnd.smartbnb.20191231+json' \
+          -H 'content-type: application/vnd.smartbnb.20210330+json' \
           --data '[
             {
               "date": "2020-01-11",
@@ -357,19 +339,11 @@ paths:
           - The price must be sent in the listing's default currency.
           - The endpoint will not accept more than 60 dates to update at once.
           - It is not required, but _highly recommended_ to use contiguous days if possible. This allows us to batch the requests we make to providers.
-      parameters:
-        - schema:
-            type: string
-            enum:
-              - property
-          in: query
-          name: type
-          description: Set this to `property` to set pricing for all listings in a property. Caveats apply.
-        - $ref: ../properties/openapi.yaml#/components/parameters/provider-optional
+      parameters: []
     parameters:
       - schema:
           type: string
-        name: id
+        name: propertyId
         in: path
         required: true
 components:
