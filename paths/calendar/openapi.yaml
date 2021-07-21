@@ -108,6 +108,28 @@ paths:
               - guest
           in: query
           name: include
+        - schema:
+            type: array
+          in: query
+          name: properties
+          description: Array of property IDs to query for.
+          required: true
+        - schema:
+            type: string
+            format: date
+            pattern: '\d{4}-\d{2}-\d{2}'
+            example: '2020-02-20'
+          in: query
+          name: start_date
+          description: Find reservations with check-in dates after this day.
+        - schema:
+            type: string
+            format: date
+            pattern: '\d{4}-\d{2}-\d{2}'
+            example: '2020-02-28'
+          in: query
+          name: end_date
+          description: Find reservations with check-in dates before this day.
       security:
         - OAuth2:
             - 'read:calendar'
