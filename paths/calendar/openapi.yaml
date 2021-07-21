@@ -81,11 +81,11 @@ paths:
                       total_pages: 1
       operationId: get-reservations
       description: |-
-        Given listings and (optionally) check-in dates, returns a filtered list of reservations.
+        Given properties and (optionally) check-in dates, returns a filtered list of reservations.
 
         ### URL parameters
 
-        - `listings[]`: Array of listing IDs to get reservations for - use as: `?listings[]=123&listings[]=456`. These are the IDs that are available in HomeAway / Airbnb, and you can also get them from the `GET /listings` endpoint.
+        - `properties[]`: Array of property IDs to get reservations for - use as: `?properties[]=123&properties[]=456`. These are the IDs that are available in smartbnb, and you can also get them from the `GET /properties` endpoint.
         - `start_date`: Optional, find reservations with check-in dates after this day. Y-m-d format, defaults to today.
         - `end_date`: Optional, find reservations with check-in dates before this day. Y-m-d format, defaults to `start_date` + 14 days.
 
@@ -99,7 +99,7 @@ paths:
         ```bash
         curl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \
              -H 'Authorization: Bearer <API TOKEN>' \
-          'https://api.smartbnb.io/calendar/reservations?listings[]=123456&listings[]=654321&start_date=2019-08-31&end_date=2019-09-30'
+          'https://api.smartbnb.io/calendar/reservations?properties[]=123456&properties[]=654321&start_date=2019-08-31&end_date=2019-09-30'
         ```
       parameters:
         - schema:
@@ -121,7 +121,7 @@ paths:
         - name: propertyId
           in: path
           required: true
-          description: The ID of the listing to retrieve the calendar for
+          description: The ID of the property to retrieve the calendar for
           schema:
             type: string
         - schema:
