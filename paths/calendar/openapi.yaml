@@ -13,10 +13,10 @@ info:
   version: ''
   description: 'Endpoints for viewing and manipulating data in listing calendars, including Reservations, Availability, and Pricing.'
   contact:
-    url: 'https://smartbnb.io'
-    email: hello@smartbnb.io
+    url: 'https://hospitable.com'
+    email: hello@hospitable.com
 servers:
-  - url: 'https://api.smartbnb.io/calendar'
+  - url: 'https://api.hospitable.com/calendar'
     description: Calendar endpoints
 paths:
   /reservations:
@@ -85,7 +85,7 @@ paths:
 
         ### URL parameters
 
-        - `properties[]`: Array of property IDs to get reservations for - use as: `?properties[]=123&properties[]=456`. These are the IDs that are available in smartbnb, and you can also get them from the `GET /properties` endpoint.
+        - `properties[]`: Array of property IDs to get reservations for - use as: `?properties[]=123&properties[]=456`. These are the IDs that are available in hospitable, and you can also get them from the `GET /properties` endpoint.
         - `start_date`: Optional, find reservations with check-in dates after this day. Y-m-d format, defaults to today.
         - `end_date`: Optional, find reservations with check-in dates before this day. Y-m-d format, defaults to `start_date` + 14 days.
 
@@ -97,9 +97,9 @@ paths:
         ### Example
 
         ```bash
-        curl -H 'Content-Type: application/vnd.smartbnb.20210721+json' \
+        curl -H 'Content-Type: application/vnd.hospitable.20210721+json' \
              -H 'Authorization: Bearer <API TOKEN>' \
-          'https://api.smartbnb.io/calendar/reservations?properties[]=123456&properties[]=654321&start_date=2019-08-31&end_date=2019-09-30'
+          'https://api.hospitable.com/calendar/reservations?properties[]=123456&properties[]=654321&start_date=2019-08-31&end_date=2019-09-30'
         ```
       parameters:
         - schema:
@@ -212,7 +212,7 @@ paths:
       description: |
         Given a Property ID, returns the Pricing and Availability in calendar format.
 
-        The returned pricing will show the take-home price of a Listing within the requested Property - so with any markups removed. Note that if your prices vary between Providers or Listings, and this isn't accounted for by your markup rates, you may not see the prices you expect; it's recommended to account for price differences by setting markup prices from within the Smartbnb web application.
+        The returned pricing will show the take-home price of a Listing within the requested Property - so with any markups removed. Note that if your prices vary between Providers or Listings, and this isn't accounted for by your markup rates, you may not see the prices you expect; it's recommended to account for price differences by setting markup prices from within the Hospitable web application.
 
         ### URL parameters
 
@@ -227,9 +227,9 @@ paths:
         ### Example
 
         ```bash
-        curl -H 'Content-Type: application/vnd.smartbnb.20210330+json' \
+        curl -H 'Content-Type: application/vnd.hospitable.20210330+json' \
              -H 'Authorization: Bearer <API TOKEN>' \
-          'https://api.smartbnb.io/calendar/123456?start_date=2019-08-31&end_date=2019-09-30'
+          'https://api.hospitable.com/calendar/123456?start_date=2019-08-31&end_date=2019-09-30'
         ```
       security:
         - OAuth2:
@@ -258,7 +258,7 @@ paths:
 
         1. Pricing, availability, and minimum stay for all listings within that Property will be updated, not just for one.
         2. Pricing is sent in the currency for your property, and should be sent as an integer in the lowest denomination of the currency (so $12.34 becomes 1234). Be aware that different providers may handle this pricing differently - for example Airbnb rounds pricing down to the nearest dollar.
-        2. A Markup will be applied to each price. This markup must be pre-configured in the Smartbnb web application first. Wihout this pre-configuration, this endpoint will fail with a `409 Conflict` response.
+        2. A Markup will be applied to each price. This markup must be pre-configured in the Hospitable web application first. Wihout this pre-configuration, this endpoint will fail with a `409 Conflict` response.
 
 
         **Please note that updating availability for HomeAway is, at this time, not functional, and therefore for listings on HomeAway the `available` boolean value in the payload is ignored. You may update pricing and minimum stay for HomeAway as normal, though.**
@@ -267,9 +267,9 @@ paths:
 
         ```bash
         curl -X PUT \
-          https://api.smartbnb.io/calendar/123456 \
+          https://api.hospitable.com/calendar/123456 \
           -H 'Authorization: Bearer <TOKEN>' \
-          -H 'content-type: application/vnd.smartbnb.20210330+json' \
+          -H 'content-type: application/vnd.hospitable.20210330+json' \
           --data '[
             {
               "date": "2020-01-11",
@@ -374,7 +374,7 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: 'https://auth.smartbnb.io/oauth/token'
+          tokenUrl: 'https://auth.hospitable.com/oauth/token'
           scopes:
             'read:calendar': read calendar data
             'write:calendar': write calendar data

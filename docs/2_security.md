@@ -1,12 +1,12 @@
 # Authentication
 
-Smartbnb protect our API endpoints using [OAuth 2.0](https://tools.ietf.org/html/rfc6749)'s Client Credentials flow. In order to use the Smartbnb API, you will need a Client ID and Secret. These should have been provided to you upon registering to use the API.
+Hospitable protect our API endpoints using [OAuth 2.0](https://tools.ietf.org/html/rfc6749)'s Client Credentials flow. In order to use the Hospitable API, you will need a Client ID and Secret. These should have been provided to you upon registering to use the API.
 
 
 <!-- theme: warning -->
 > #### 👀 Watch out!
 > 
-> Your Client ID and Secret are effectively credentials to access your Smartbnb account and connected Airbnb or HomeAway (VRBO) accounts, and therefore should be kept secure at all times - just like passwords.
+> Your Client ID and Secret are effectively credentials to access your Hospitable account and connected Airbnb or HomeAway (VRBO) accounts, and therefore should be kept secure at all times - just like passwords.
 
 
 ## Token Exchange
@@ -15,12 +15,12 @@ Once you have your credentials, your application should request an access token 
 
 ```bash
 curl --request POST \
-  --url https://auth.smartbnb.io/oauth/token \
+  --url https://auth.hospitable.com/oauth/token \
   --header 'Content-Type: application/json' \
   --data '{
 	"client_id": "<YOUR CLIENT ID>",
 	"client_secret": "<YOUR CLIENT SECRET>",
-	"audience":"api.smartbnb.io",
+	"audience":"api.hospitable.com",
 	"grant_type":"client_credentials"
 }'
 ```

@@ -1,11 +1,11 @@
 # Versioning
 
-As we iterate on the Smartbnb Public API, it's possible that we will make changes that could cause your application to break. In order to minimise the impact of this, requests that you send to our API should be accompanied by a version, to help us understand what format to respond with.
+As we iterate on the Hospitable Public API, it's possible that we will make changes that could cause your application to break. In order to minimise the impact of this, requests that you send to our API should be accompanied by a version, to help us understand what format to respond with.
 
 This version takes the form of a datestamp, and should be sent in the `Content-Type` HTTP header of the request, like so:
 
 ```http
-Content-Type: `application/vnd.smartbnb.20210308+json`
+Content-Type: `application/vnd.hospitable.20210308+json`
 ```
 
 The requested datestamp should be the latest known working date for a resource. If no datestamp is sent, the API will respond with the latest version of the resource, along with a warning.

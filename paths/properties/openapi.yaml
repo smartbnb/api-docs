@@ -9,10 +9,10 @@ info:
   version: ''
   description: Endpoints for viewing Properties and their associated Listings.
   contact:
-    url: 'https://smartbnb.io'
-    email: hello@smartbnb.io
+    url: 'https://hospitable.com'
+    email: hello@hospitable.com
 servers:
-  - url: 'https://api.smartbnb.io'
+  - url: 'https://api.hospitable.com'
     description: Property & listing endpoints
 paths:
   /listings:
@@ -108,7 +108,7 @@ paths:
                       total_pages: 51
       operationId: get-listings
       description: |-
-        Get all listings that are on channels connected to your smartbnb account.
+        Get all listings that are on channels connected to your hospitable account.
 
         ### Allowed Includes
 
@@ -117,9 +117,9 @@ paths:
         ### Example
 
         ```bash
-        curl -H 'Content-Type: application/vnd.smartbnb.20190904+json' \
+        curl -H 'Content-Type: application/vnd.hospitable.20190904+json' \
              -H 'Authorization: Bearer <API TOKEN>' \
-          'https://api.smartbnb.io/listings'
+          'https://api.hospitable.com/listings'
         ```
       security:
         - OAuth2:
@@ -196,9 +196,9 @@ paths:
         ### Example
 
         ```bash
-        curl -H 'Content-Type: application/vnd.smartbnb.20210222+json' \
+        curl -H 'Content-Type: application/vnd.hospitable.20210222+json' \
              -H 'Authorization: Bearer <API TOKEN>' \
-          'https://api.smartbnb.io/listings/{listingId}?provider=airbnb'
+          'https://api.hospitable.com/listings/{listingId}?provider=airbnb'
         ```
       security:
         - OAuth2:
@@ -270,9 +270,9 @@ paths:
         ### Example
 
         ```bash
-        curl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \
+        curl -H 'Content-Type: application/vnd.hospitable.20191201+json' \
              -H 'Authorization: Bearer <API TOKEN>' \
-          'https://api.smartbnb.io/properties'
+          'https://api.hospitable.com/properties'
         ```
       security:
         - OAuth2:
@@ -350,9 +350,9 @@ paths:
         ### Example
 
         ```bash
-        curl -H 'Content-Type: application/vnd.smartbnb.20191201+json' \
+        curl -H 'Content-Type: application/vnd.hospitable.20191201+json' \
              -H 'Authorization: Bearer <API TOKEN>' \
-          'https://api.smartbnb.io/properties/{propertyId}'
+          'https://api.hospitable.com/properties/{propertyId}'
         ```
       parameters:
         - schema:
@@ -371,7 +371,7 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: 'https://auth.smartbnb.io/oauth/token'
+          tokenUrl: 'https://auth.hospitable.com/oauth/token'
           scopes:
             'read:calendar': read calendar data
   parameters:

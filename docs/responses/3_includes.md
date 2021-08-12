@@ -5,7 +5,7 @@ In some cases, it's possible to request a superset of data to be returned. These
 In order to do this, add a URL parameter of `include` to your request. For example, when requesting Reservations, it's possible to include data on the Guest without having to make separate HTTP requests by adding `include=guest` as a URL parameter:
 
 ```bash
-curl -H 'Content-Type: application/vnd.smartbnb.20190904+json' -H 'Authorization: Bearer <token>' https://api.smartbnb.io/calendar/reservations?include=guest
+curl -H 'Content-Type: application/vnd.hospitable.20190904+json' -H 'Authorization: Bearer <token>' https://api.hospitable.com/calendar/reservations?include=guest
 ```
 
 This will embed the included resource in the API response, under an `_included` key. For example:
